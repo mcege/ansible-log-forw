@@ -15,9 +15,8 @@
 #    - { line: "local6.* {{ audit_log_destination }}", insertafter: "^#mail" }
 #    - { line: "local6.* @{{ logger_ip }}", insertbefore: "^#forwarding" }
 
-- name: Create /etc/rsyslog.conf.org
+- name: Create /etc/rsyslog.conf
   template:
-  backup: yes
     src=rsyslog.conf.j2
     dest=/etc/rsyslog.conf
     owner=root
