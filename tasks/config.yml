@@ -9,9 +9,8 @@
 - name: Configure /etc/rsyslog.conf
   lineinfile:
       dest: /etc/rsyslog.conf
-      regexp: "{{ item.regexp }}"
       line: "{{ item.line }}"
   with_items:
-    - { regexp: "^mail ", insertafter: "^#mail ", line: "#bash_history logging" }
-    - { regexp: "^mail ", insertafter: "^#mail ", line: "local6.* {{ audit_log_destination }}" }
-    - { regexp: "^forwarding ", insertbefore: "^#forwarding ", line: "local6.* @{{ logger_ip }}" }
+    - { line: "#bash_history logging",  insertafter: "^#mail" }
+    - { line: "local6.* {{ audit_log_destination }}", insertafter: "^#mail" }
+    - { line: "local6.* @{{ logger_ip }}", insertbefore: "^#forwarding" }
