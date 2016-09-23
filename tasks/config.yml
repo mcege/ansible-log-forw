@@ -6,11 +6,28 @@
 #  lineinfile: dest=/etc/rsyslog.conf regexp="^RULES " insertafter="^#RULES " line="local6.* {{ audit_log_destination }}"
 #  lineinfile: dest=/etc/rsyslog.conf regexp="^forwarding " insertbefore="^#forwarding " line="local6.* @{{ logger_ip }}"
 
-- name: Configure /etc/rsyslog.conf
-  lineinfile:
-      dest: /etc/rsyslog.conf
-      line: "{{ item.line }}"
-  with_items:
-    - { line: "#bash_history logging",  insertafter: "^#mail" }
-    - { line: "local6.* {{ audit_log_destination }}", insertafter: "^#mail" }
-    - { line: "local6.* @{{ logger_ip }}", insertbefore: "^#forwarding" }
+#- name: Configure /etc/rsyslog.conf
+#  lineinfile:
+#      dest: /etc/rsyslog.conf
+#      line: "{{ item.line }}"
+#  with_items:
+#    - { line: "#bash_history logging",  insertafter: "^#mail" }
+#    - { line: "local6.* {{ audit_log_destination }}", insertafter: "^#mail" }
+#    - { line: "local6.* @{{ logger_ip }}", insertbefore: "^#forwarding" }
+
+- name: Create /etc/rsyslog.conf.org
+  template:
+    src=rsyslog.conf.j2
+    dest=/etc/rsyslog.conf.org
+    owner=root
+    group=root
+    mode=0644
+
+- name: Delete /etc/rsyslog.conf
+  shell: rm -rf /etc/rsyslog.conf
+
+- name: Rename /etc/rsyslog.conf.org
+  shell: mv /etc/rsyslog.conf.org /etc/rsyslog.conf
+  notify:
+    - restart rsyslog
+

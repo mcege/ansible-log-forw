@@ -2,4 +2,5 @@
 ---
 
 logger_ip: 172.25.6.46
+syslog_facility: local6
 audit_log_destination: /var/log/cmd-audit.log
