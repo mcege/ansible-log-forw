@@ -1,7 +1,17 @@
 # Configure rsyslog.conf
 ---
 
+#- name: Configure /etc/rsyslog.conf
+#  lineinfile: dest=/etc/rsyslog.conf regexp="^RULES " insertafter="^#RULES " line="#bash_history logging"
+#  lineinfile: dest=/etc/rsyslog.conf regexp="^RULES " insertafter="^#RULES " line="local6.* {{ audit_log_destination }}"
+#  lineinfile: dest=/etc/rsyslog.conf regexp="^forwarding " insertbefore="^#forwarding " line="local6.* @{{ logger_ip }}"
+
 - name: Configure /etc/rsyslog.conf
-  lineinfile: dest=/etc/rsyslog.conf regexp="^RULES " insertafter="^#RULES " line="#bash_history logging"
-  lineinfile: dest=/etc/rsyslog.conf regexp="^RULES " insertafter="^#RULES " line="local6.* {{ audit_log_destination }}"
-  lineinfile: dest=/etc/rsyslog.conf regexp="^forwarding " insertbefore="^#forwarding " line="local6.* @{{ logger_ip }}"
+  lineinfile:
+      dest: /etc/rsyslog.conf
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+  with_items:
+    - { regexp: "^RULES ", insertafter: "^#RULES ", line: "#bash_history logging" }
+    - { regexp: "^RULES ", insertafter: "^#RULES ", line: "local6.* {{ audit_log_destination }}" }
+    - { regexp: "^forwarding ", insertbefore: "^#forwarding ", line: "local6.* @{{ logger_ip }}" }
