@@ -12,6 +12,6 @@
       regexp: "{{ item.regexp }}"
       line: "{{ item.line }}"
   with_items:
-    - { regexp: "^RULES ", insertafter: "^#RULES ", line: "#bash_history logging" }
-    - { regexp: "^RULES ", insertafter: "^#RULES ", line: "local6.* {{ audit_log_destination }}" }
+    - { regexp: "^mail ", insertafter: "^#mail ", line: "#bash_history logging" }
+    - { regexp: "^mail ", insertafter: "^#mail ", line: "local6.* {{ audit_log_destination }}" }
     - { regexp: "^forwarding ", insertbefore: "^#forwarding ", line: "local6.* @{{ logger_ip }}" }
