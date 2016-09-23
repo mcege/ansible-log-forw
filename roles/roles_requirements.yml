@@ -1,0 +1,2 @@
+- src: git+https://github.com/queeno/ansible-log-forw.git
+  name: ansible-log-forw

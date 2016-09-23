@@ -17,17 +17,20 @@
 
 - name: Create /etc/rsyslog.conf.org
   template:
+  backup: yes
     src=rsyslog.conf.j2
-    dest=/etc/rsyslog.conf.org
+    dest=/etc/rsyslog.conf
     owner=root
     group=root
     mode=0644
-
-- name: Delete /etc/rsyslog.conf
-  file: path=/etc/rsyslog.conf state=absent
-
-- name: Rename /etc/rsyslog.conf.org
-  shell: mv /etc/rsyslog.conf.org /etc/rsyslog.conf
   notify:
-    - restart rsyslog
+    restart rsyslog
+
+#- name: Delete /etc/rsyslog.conf
+#  file: path=/etc/rsyslog.conf state=absent
+
+#- name: Rename /etc/rsyslog.conf.org
+#  shell: mv /etc/rsyslog.conf.org /etc/rsyslog.conf
+#  notify:
+#    - restart rsyslog
 
