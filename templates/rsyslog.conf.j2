@@ -46,7 +46,7 @@ authpriv.*                                              /var/log/secure
 mail.*                                                  -/var/log/maillog
 
 #bash_history logging
-{{ syslog_facility }}.*                                 {{ audit_log_destination }}
+{{ syslog_facility }}.*                                 		{{ audit_log_destination }}
 
 # Log cron stuff
 cron.*                                                  /var/log/cron
