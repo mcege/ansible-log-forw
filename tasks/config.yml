@@ -24,7 +24,7 @@
     mode=0644
 
 - name: Delete /etc/rsyslog.conf
-  shell: rm -rf /etc/rsyslog.conf
+  win_file: path=/etc/rsyslog.conf state=absent
 
 - name: Rename /etc/rsyslog.conf.org
   shell: mv /etc/rsyslog.conf.org /etc/rsyslog.conf
